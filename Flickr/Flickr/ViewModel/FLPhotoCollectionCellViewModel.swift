@@ -12,6 +12,7 @@ import UIKit
 protocol FLPhotoCollectionCellViewModelProtocol {
     func fetchImage(completion:@escaping (UIImage?, String) ->Void)
     func imageURLString() ->String?
+    var imageURL:URL{get set}
 }
 
 class FLPhotoCollectionCellViewModel:FLPhotoCollectionCellViewModelProtocol {

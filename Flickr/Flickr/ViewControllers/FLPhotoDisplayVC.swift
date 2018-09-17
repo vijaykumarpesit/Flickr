@@ -46,9 +46,13 @@ extension FLPhotoDisplayVC:UICollectionViewDelegate,UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:imageCellReuseID, for: indexPath) as! FLPhotoCollectionViewCell
         if let photo = self.viewModel.dataSource.itemAtIndexPath(indexPath) {
-            let vm =  FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
-            cell.viewModel = vm
-            cell.configure()
+            if cell.viewModel == nil {
+                let vm =  FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
+                cell.viewModel = vm
+            } else {
+                cell.viewModel.imageURL = URL(string:photo.urlString())!
+                cell.configure()
+            }
         }
         return cell
         
