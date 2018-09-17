@@ -7,16 +7,26 @@
 //
 
 import Foundation
+import UIKit
 
 protocol FLPhotoDisplayViewModelProtocol {
     var dataSource:FLPhotoDataSourceProtocol {get set}
     func loadMorePhotos(completion:@escaping (Bool) ->Void)
     func endOfResults() ->Bool
+    func childViewModelAtIndexPath(indexPath:IndexPath) -> FLPhotoCollectionCellViewModelProtocol?
+    func searchPhotosWithQueryText(text:String?, completion:@escaping (Bool) ->Void)
 }
 
 final class FLPhotoDisplayViewModel: FLPhotoDisplayViewModelProtocol {
     var dataSource:FLPhotoDataSourceProtocol
-
+    private var childViewModels:[FLPhotoCollectionCellViewModelProtocol] = [FLPhotoCollectionCellViewModelProtocol]()
+    lazy var imageCache: NSCache<NSString, UIImage> = {
+        let cache = NSCache<NSString, UIImage>()
+        cache.countLimit = 100
+        return cache
+    }()
+    let imageDownloader = FLImageDownloader()
+    
     init(dataSource: FLPhotoDataSourceProtocol) {
         self.dataSource = dataSource
     }
@@ -35,9 +45,27 @@ final class FLPhotoDisplayViewModel: FLPhotoDisplayViewModelProtocol {
             }
         }
     }
-
+    
     func endOfResults() ->Bool {
         return dataSource.state == .FLPhotoDataSourceEndOfResults
+    }
+    
+    func childViewModelAtIndexPath(indexPath:IndexPath) -> FLPhotoCollectionCellViewModelProtocol? {
+        var cellViewModel: FLPhotoCollectionCellViewModelProtocol?
+        if let photo = self.dataSource.itemAtIndexPath(indexPath) {
+            if indexPath.row < childViewModels.count {
+                cellViewModel = childViewModels[indexPath.row]
+            } else {
+                cellViewModel = FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
+                
+            }
+        }
+        return cellViewModel
+    }
+    
+    func searchPhotosWithQueryText(text:String?, completion:@escaping (Bool) ->Void) {
+        self.dataSource.queryText = text
+        self.loadMorePhotos(completion: completion)
     }
 
 }

@@ -11,17 +11,8 @@ import UIKit
 final class FLPhotoDisplayVC: UIViewController {
     private let imageCellReuseID = "imageCellReuseID"
     private let imageCellFooter = "imageCellFooter"
-    private var cellViewModels = [FLPhotoCollectionCellViewModelProtocol]()
     
     var viewModel:FLPhotoDisplayViewModelProtocol!
-    lazy var imageCache: NSCache<NSString, UIImage> = {
-        let cache = NSCache<NSString, UIImage>()
-        cache.countLimit = 100
-        return cache
-    }()
-    
-    let imageDownloader = FLImageDownloader()
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -46,15 +37,8 @@ extension FLPhotoDisplayVC: UICollectionViewDelegate,UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:imageCellReuseID, for: indexPath) as! FLPhotoCollectionViewCell
-        if let photo = viewModel.dataSource.itemAtIndexPath(indexPath) {
-            var cellViewModel: FLPhotoCollectionCellViewModelProtocol?
-            if (indexPath.row < self.cellViewModels.count) {
-                cellViewModel = self.cellViewModels[indexPath.row]
-            } else {
-                cellViewModel = FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
-                cellViewModels.append(cellViewModel!)
-            }
-            cell.configure(vm: cellViewModel!)
+        if let cellVm = viewModel.childViewModelAtIndexPath(indexPath: indexPath) {
+            cell.configure(vm:cellVm)
         }
         return cell
     }
@@ -93,15 +77,15 @@ extension FLPhotoDisplayVC:UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         collectionView.isHidden = true
-        viewModel.dataSource.queryText = searchBar.text
-        viewModel.loadMorePhotos { (loaded) in
+        self.collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
+        viewModel.searchPhotosWithQueryText(text: searchBar.text, completion:{ (loaded) in
             if (loaded){
                 DispatchQueue.main.async { [weak self]  in
                     self?.collectionView.isHidden = false
                     self?.collectionView.reloadData()
                 }
             }
-        }
+        })
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

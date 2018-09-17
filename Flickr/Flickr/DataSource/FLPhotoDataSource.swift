@@ -79,5 +79,6 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
     private func resetDataSource() {
         self.results = [FLPhoto]()
         self.pageNumber = 1
+        self.state = .FLPhotoDataSourceDefault
     }
 }
