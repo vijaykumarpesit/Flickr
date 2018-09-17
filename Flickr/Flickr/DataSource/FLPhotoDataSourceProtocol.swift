@@ -7,7 +7,7 @@
 //
 
 import Foundation
-protocol FLPhotoDataSourceProtocol:AnyObject {
+protocol FLPhotoDataSourceProtocol {
     var state:FLPhotoDataSourceState{ get }
     var queryText:String? {get set}
     func numberOfItems() -> Int

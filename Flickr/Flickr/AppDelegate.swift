@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //For complex app move this code to UIManager and make use of flow codinators to coordinate between multiple screens
     func initialiseRootVC() -> UIViewController {
         let displayVC =  FLPhotoDisplayVC.init(nibName:"FLPhotoDisplayVC",bundle:nil)
-        displayVC.viewModel = FLPhotoDisplayViewModel()
+        displayVC.viewModel = FLPhotoDisplayViewModel.init(dataSource: FLPhotoDataSource())
         return displayVC
     }
 }

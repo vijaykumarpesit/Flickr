@@ -51,8 +51,9 @@ extension FLPhotoDisplayVC:UICollectionViewDelegate,UICollectionViewDataSource, 
                 cell.viewModel = vm
             } else {
                 cell.viewModel.imageURL = URL(string:photo.urlString())!
-                cell.configure()
             }
+            cell.configure()
+            
         }
         return cell
         

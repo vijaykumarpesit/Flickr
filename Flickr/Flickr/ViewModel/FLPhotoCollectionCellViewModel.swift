@@ -11,7 +11,7 @@ import UIKit
 
 protocol FLPhotoCollectionCellViewModelProtocol {
     func fetchImage(completion:@escaping (UIImage?, String) ->Void)
-    func imageURLString() ->String?
+    var imageURLString: String {get}
     var imageURL:URL{get set}
 }
 
@@ -21,6 +21,9 @@ class FLPhotoCollectionCellViewModel:FLPhotoCollectionCellViewModelProtocol {
     var imageCache:NSCache<NSString, UIImage>?
     var imageDownloader:FLImageDownloaderProtocol
     var imageURL:URL
+    var imageURLString: String {
+        return self.imageURL.absoluteString
+    }
     
     required init(imageCache:NSCache<NSString, UIImage>?, imageURL:URL, imageDownloader:FLImageDownloaderProtocol) {
         self.imageCache = imageCache
@@ -53,9 +56,4 @@ class FLPhotoCollectionCellViewModel:FLPhotoCollectionCellViewModelProtocol {
         }
         
     }
-    
-    func imageURLString() -> String? {
-        return self.imageURL.absoluteString
-    }
-
 }

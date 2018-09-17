@@ -26,6 +26,19 @@
 		E61D9916214F653F0068DDAE /* NWMockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D9912214F653F0068DDAE /* NWMockURLSession.swift */; };
 		E61D9917214F653F0068DDAE /* NWRequestBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D9913214F653F0068DDAE /* NWRequestBuilderTests.swift */; };
 		E61D9918214F653F0068DDAE /* NWURLParamterEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D9914214F653F0068DDAE /* NWURLParamterEncoderTests.swift */; };
+		E66A0086214F8D220033D9B1 /* FLPhotoDisplayVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66A0085214F8D220033D9B1 /* FLPhotoDisplayVMTests.swift */; };
+		E66A008A214F8DD70033D9B1 /* FLPhotoDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98ED214F649C0068DDAE /* FLPhotoDataSourceProtocol.swift */; };
+		E66A008B214F8E380033D9B1 /* FLPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98F3214F64AC0068DDAE /* FLPhoto.swift */; };
+		E66A008C214F8E3B0033D9B1 /* FLPhotosCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98F2214F64AC0068DDAE /* FLPhotosCollection.swift */; };
+		E66A008D214F8E3D0033D9B1 /* FLPhotoSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98F4214F64AC0068DDAE /* FLPhotoSearchResult.swift */; };
+		E66A008E214F8EDD0033D9B1 /* FLPhotoCollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98FD214F64AC0068DDAE /* FLPhotoCollectionCellViewModel.swift */; };
+		E66A008F214F8EE00033D9B1 /* FLPhotoDisplayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98FC214F64AC0068DDAE /* FLPhotoDisplayViewModel.swift */; };
+		E66A0090214F8F450033D9B1 /* FLPhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98EE214F649C0068DDAE /* FLPhotoDataSource.swift */; };
+		E66A0091214F8FA10033D9B1 /* FLPhotoSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98FA214F64AC0068DDAE /* FLPhotoSearchService.swift */; };
+		E66A0092214F8FA30033D9B1 /* FLImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D98F9214F64AC0068DDAE /* FLImageDownloader.swift */; };
+		E66A0094214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66A0093214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift */; };
+		E66A0096214F91C50033D9B1 /* APIResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = E66A0095214F91C50033D9B1 /* APIResponse.json */; };
+		E66A0098214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66A0097214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift */; };
 		E66F1868214EAEAE008F3979 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66F1867214EAEAE008F3979 /* AppDelegate.swift */; };
 		E66F186F214EAEAF008F3979 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E66F186E214EAEAF008F3979 /* Assets.xcassets */; };
 		E66F1872214EAEAF008F3979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E66F1870214EAEAF008F3979 /* LaunchScreen.storyboard */; };
@@ -72,6 +85,10 @@
 		E61D9912214F653F0068DDAE /* NWMockURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWMockURLSession.swift; sourceTree = "<group>"; };
 		E61D9913214F653F0068DDAE /* NWRequestBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWRequestBuilderTests.swift; sourceTree = "<group>"; };
 		E61D9914214F653F0068DDAE /* NWURLParamterEncoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWURLParamterEncoderTests.swift; sourceTree = "<group>"; };
+		E66A0085214F8D220033D9B1 /* FLPhotoDisplayVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLPhotoDisplayVMTests.swift; sourceTree = "<group>"; };
+		E66A0093214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLPhotoDataSourceTests.swift; sourceTree = "<group>"; };
+		E66A0095214F91C50033D9B1 /* APIResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = APIResponse.json; sourceTree = "<group>"; };
+		E66A0097214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLPhotoCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		E66F1864214EAEAE008F3979 /* Flickr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66F1867214EAEAE008F3979 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E66F186E214EAEAF008F3979 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -168,7 +185,7 @@
 			path = Flickr/Views;
 			sourceTree = "<group>";
 		};
-		E61D9910214F653F0068DDAE /* NW Layer */ = {
+		E61D9910214F653F0068DDAE /* NWLayerTests */ = {
 			isa = PBXGroup;
 			children = (
 				E61D9911214F653F0068DDAE /* NWServiceProviderTests.swift */,
@@ -176,7 +193,25 @@
 				E61D9913214F653F0068DDAE /* NWRequestBuilderTests.swift */,
 				E61D9914214F653F0068DDAE /* NWURLParamterEncoderTests.swift */,
 			);
-			path = "NW Layer";
+			path = NWLayerTests;
+			sourceTree = "<group>";
+		};
+		E66A0080214F85230033D9B1 /* VmTests */ = {
+			isa = PBXGroup;
+			children = (
+				E66A0085214F8D220033D9B1 /* FLPhotoDisplayVMTests.swift */,
+				E66A0097214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift */,
+			);
+			path = VmTests;
+			sourceTree = "<group>";
+		};
+		E66A0087214F8D8B0033D9B1 /* DatasourceTests */ = {
+			isa = PBXGroup;
+			children = (
+				E66A0093214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift */,
+				E66A0095214F91C50033D9B1 /* APIResponse.json */,
+			);
+			path = DatasourceTests;
 			sourceTree = "<group>";
 		};
 		E66F185B214EAEAE008F3979 = {
@@ -218,7 +253,9 @@
 		E66F187B214EAEAF008F3979 /* FlickrTests */ = {
 			isa = PBXGroup;
 			children = (
-				E61D9910214F653F0068DDAE /* NW Layer */,
+				E66A0087214F8D8B0033D9B1 /* DatasourceTests */,
+				E66A0080214F85230033D9B1 /* VmTests */,
+				E61D9910214F653F0068DDAE /* NWLayerTests */,
 				E66F187C214EAEAF008F3979 /* FlickrTests.swift */,
 				E66F187E214EAEB0008F3979 /* Info.plist */,
 			);
@@ -331,6 +368,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E66A0096214F91C50033D9B1 /* APIResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,14 +405,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				E66F1896214EAF20008F3979 /* NWConstants.swift in Sources */,
+				E66A008A214F8DD70033D9B1 /* FLPhotoDataSourceProtocol.swift in Sources */,
 				E66F1890214EAF20008F3979 /* NWURLParamterEncoder.swift in Sources */,
 				E66F1894214EAF20008F3979 /* NWServiceProvider.swift in Sources */,
 				E66F1892214EAF20008F3979 /* NWEndpoint.swift in Sources */,
+				E66A0098214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift in Sources */,
+				E66A0094214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift in Sources */,
+				E66A008D214F8E3D0033D9B1 /* FLPhotoSearchResult.swift in Sources */,
 				E61D9917214F653F0068DDAE /* NWRequestBuilderTests.swift in Sources */,
 				E61D9918214F653F0068DDAE /* NWURLParamterEncoderTests.swift in Sources */,
+				E66A0086214F8D220033D9B1 /* FLPhotoDisplayVMTests.swift in Sources */,
 				E66F188E214EAF20008F3979 /* NWRequestBuilder.swift in Sources */,
+				E66A008B214F8E380033D9B1 /* FLPhoto.swift in Sources */,
+				E66A0091214F8FA10033D9B1 /* FLPhotoSearchService.swift in Sources */,
+				E66A008F214F8EE00033D9B1 /* FLPhotoDisplayViewModel.swift in Sources */,
+				E66A008E214F8EDD0033D9B1 /* FLPhotoCollectionCellViewModel.swift in Sources */,
+				E66A0090214F8F450033D9B1 /* FLPhotoDataSource.swift in Sources */,
+				E66A008C214F8E3B0033D9B1 /* FLPhotosCollection.swift in Sources */,
 				E61D9915214F653F0068DDAE /* NWServiceProviderTests.swift in Sources */,
 				E66F187D214EAEAF008F3979 /* FlickrTests.swift in Sources */,
+				E66A0092214F8FA30033D9B1 /* FLImageDownloader.swift in Sources */,
 				E61D9916214F653F0068DDAE /* NWMockURLSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

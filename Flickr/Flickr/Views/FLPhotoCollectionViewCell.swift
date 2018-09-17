@@ -13,12 +13,11 @@ class FLPhotoCollectionViewCell: UICollectionViewCell {
     var viewModel:FLPhotoCollectionCellViewModelProtocol!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.imageView.image = UIImage.init(named: "loadingIcon")
     }
     
     func configure() {
         self.viewModel?.fetchImage {  [weak self] (image,urlString) in
-            if let image  = image,self?.viewModel?.imageURLString() == urlString {
+            if let image  = image,self?.viewModel?.imageURLString == urlString {
                 self?.imageView.image = image
             }
         }

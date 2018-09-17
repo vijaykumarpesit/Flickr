@@ -9,13 +9,17 @@
 import Foundation
 
 protocol FLPhotoDisplayViewModelProtocol {
-    var dataSource:FLPhotoDataSourceProtocol {get}
+    var dataSource:FLPhotoDataSourceProtocol {get set}
     func loadMorePhotos(completion:@escaping (Bool) ->Void)
     func endOfResults() ->Bool
 }
 
 class FLPhotoDisplayViewModel:FLPhotoDisplayViewModelProtocol {
-    lazy var dataSource:FLPhotoDataSourceProtocol = FLPhotoDataSource()
+    var dataSource:FLPhotoDataSourceProtocol
+
+    init(dataSource:FLPhotoDataSourceProtocol) {
+        self.dataSource = dataSource
+    }
     
     func loadMorePhotos(completion:@escaping (Bool) ->Void){
         if (self.dataSource.state == .FLPhotoDataSourceLoading || self.dataSource.state == .FLPhotoDataSourceEndOfResults) {
