@@ -21,11 +21,17 @@ class NWServiceProviderTests: XCTestCase {
     }
     
     func testPerformRequest() {
-        let serviceProvider = NWServiceProvider.init(session: NWMockURLSession.init(resultData:"Test".data(using: .utf8), resultResponse:nil, error: nil))
+        let serviceProvider = NWServiceProvider.init(session:NWMockURLSession())
         let endPoint = NWEndPoint.init(baseURL: URL(string: "https://google.com")!, pathComp: "images", method: .get, headers:nil, params:nil, body: nil)
         let expectation = XCTestExpectation(description: "Testing Data Task")
-        serviceProvider.performRequest(endPoint: endPoint) { (data, respinse, error) in
-            XCTAssertEqual("Test".data(using:.utf8), data,"Result Data not matching")
+        serviceProvider.performRequest(endPoint: endPoint) {(data, response, error) in
+            XCTAssertNotNil(data,"Data returned from Flickr API is nil")
+//            do{
+//                let _ = try JSONDecoder().decode(FLPhotosCollection.self, from: data!)
+//            } catch {
+//                XCTFail("Json decode failed")
+//            }
+            
             expectation.fulfill()
             
         }

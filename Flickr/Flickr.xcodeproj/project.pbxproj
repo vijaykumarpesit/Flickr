@@ -39,6 +39,7 @@
 		E66A0094214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66A0093214F90AC0033D9B1 /* FLPhotoDataSourceTests.swift */; };
 		E66A0096214F91C50033D9B1 /* APIResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = E66A0095214F91C50033D9B1 /* APIResponse.json */; };
 		E66A0098214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66A0097214F92400033D9B1 /* FLPhotoCollectionViewCellViewModelTests.swift */; };
+		E66A0099214F9BB70033D9B1 /* APIResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = E66A0095214F91C50033D9B1 /* APIResponse.json */; };
 		E66F1868214EAEAE008F3979 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66F1867214EAEAE008F3979 /* AppDelegate.swift */; };
 		E66F186F214EAEAF008F3979 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E66F186E214EAEAF008F3979 /* Assets.xcassets */; };
 		E66F1872214EAEAF008F3979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E66F1870214EAEAF008F3979 /* LaunchScreen.storyboard */; };
@@ -359,6 +360,7 @@
 				E61D990D214F64AD0068DDAE /* FLPhotoCollectionViewCell.xib in Resources */,
 				E61D9907214F64AD0068DDAE /* FLPhotoDisplayVC.xib in Resources */,
 				E66F1872214EAEAF008F3979 /* LaunchScreen.storyboard in Resources */,
+				E66A0099214F9BB70033D9B1 /* APIResponse.json in Resources */,
 				E61D990C214F64AD0068DDAE /* FLPhotoCollectionViewFooter.xib in Resources */,
 				E66F186F214EAEAF008F3979 /* Assets.xcassets in Resources */,
 			);

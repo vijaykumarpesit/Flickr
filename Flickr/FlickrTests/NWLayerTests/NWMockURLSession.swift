@@ -15,19 +15,14 @@ class NWURLSessionTaskMock: URLSessionDataTask {
 
 
 class NWMockURLSession: URLSession {
-    var data: Data?
-    var resultResponse:URLResponse?
-    var error:Swift.Error?
-    
-    init(resultData:Data?, resultResponse:URLResponse?, error:Swift.Error?) {
-        self.data = resultData
-        self.error = error
-        self.resultResponse = resultResponse
-    }
-    
     override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Swift.Error?) -> Void) -> URLSessionDataTask {
         let mockDataTask = NWURLSessionTaskMock()
-        completionHandler(self.data, resultResponse,error)
+        guard let file = Bundle.main.url(forResource: "APIResponse", withExtension: "json"), let data = try? Data(contentsOf: file, options: .mappedIfSafe) else {
+            completionHandler(nil,nil, nil)
+            return mockDataTask
+        }
+        completionHandler(data, nil,nil)
+
         return mockDataTask
     }
 }
