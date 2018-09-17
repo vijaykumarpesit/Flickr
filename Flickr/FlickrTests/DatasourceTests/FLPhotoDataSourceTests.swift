@@ -19,7 +19,7 @@ class FLPhotoDataSourceTests: XCTestCase {
     }
     
     func testFetchMoreData() {
-        let expectation = XCTestExpectation(description: "Testing Data Task")
+        let expectation = XCTestExpectation(description:"")
         ds.fetchNextBatch { (state) in
             XCTAssert(self.ds.numberOfItems() == 50,"Mismatch in number of items")
             XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceFinished,"Mismatch in state")
@@ -31,7 +31,7 @@ class FLPhotoDataSourceTests: XCTestCase {
     }
     
     func testEndOfResultsData() {
-        let expectation = XCTestExpectation(description: "Testing Data Task")
+        let expectation = XCTestExpectation(description: "")
         self.ds.pageNumber = 11625
         ds.fetchNextBatch { (state) in
             XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceEndOfResults,"Mismatch in state")
@@ -42,7 +42,7 @@ class FLPhotoDataSourceTests: XCTestCase {
     
     func testResetDataOnNewSearchText()  {
         self.ds.queryText = "hello"
-        let expectation = XCTestExpectation(description: "Testing Data Task")
+        let expectation = XCTestExpectation(description: "")
         ds.fetchNextBatch { (state) in
             XCTAssert(self.ds.numberOfItems() == 50,"Mismatch in number of items")
             XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceFinished,"Mismatch in state")
@@ -54,4 +54,15 @@ class FLPhotoDataSourceTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
 
+    func testDataSourceState() {
+        let expectation = XCTestExpectation(description: "")
+        ds.fetchNextBatch { (state) in
+            XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceFinished,"Mismatch in state")
+            expectation.fulfill()
+        }
+        XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceLoading,"Mismatch in state")
+        
+        wait(for: [expectation], timeout: 10.0)
+        
+    }
 }
