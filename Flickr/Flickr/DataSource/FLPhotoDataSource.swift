@@ -11,7 +11,7 @@ import Foundation
 let batchSize = 50
 
 class FLPhotoDataSource:FLPhotoDataSourceProtocol {
-    var state:FLPhotoDataSourceState = .FLPhotoDataSourceDefault
+    var state:FLPhotoDataSourceState = .initial
     var results:[FLPhoto] = [FLPhoto]()
     var pageNumber:Int = 1
     lazy var searchService:FLPhotoSearchService = initialiseSearchService()
@@ -24,7 +24,7 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
     }
     
    private func initialiseSearchService() -> FLPhotoSearchService {
-        let searchService = FLPhotoSearchService.init()
+        let searchService = FLPhotoSearchService()
         return searchService
     }
     
@@ -42,30 +42,30 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
     }
     
     func fetchNextBatch(completion:@escaping(FLPhotoDataSourceState) -> Void) {
-        if self.state == .FLPhotoDataSourceLoading &&  self.state == .FLPhotoDataSourceEndOfResults {
+        if self.state == .loading &&  self.state == .endOfResults {
             completion(self.state)
             return;
         }
-        self.state = .FLPhotoDataSourceLoading
+        self.state = .loading
         let searchText = self.queryText ?? ""
         self.searchService.searchPhotos(searchText:searchText, page: self.pageNumber, perPageCount: batchSize) { (collection, error) in
             if let _ = error {
-                self.state = .FLPhotoDataSourceFailed
+                self.state = .failed
             } else {
-                self.state = .FLPhotoDataSourceFinished
+                self.state = .finished
                 if let newResults = collection?.photos?.photo {
                     self.results += newResults
                 }
                 
                 if let totol = collection?.photos?.total {
                     if (self.pageNumber*batchSize > Int(totol)!) {
-                        self.state = .FLPhotoDataSourceEndOfResults
+                        self.state = .endOfResults
                     }
                 }
                 
                 //Mark state as finished
                 if (self.pageNumber * batchSize >= Int((collection?.photos?.total)!)!) {
-                    self.state = .FLPhotoDataSourceEndOfResults
+                    self.state = .endOfResults
                 }
                 
                 self.pageNumber += 1
@@ -79,6 +79,6 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
     private func resetDataSource() {
         self.results = [FLPhoto]()
         self.pageNumber = 1
-        self.state = .FLPhotoDataSourceDefault
+        self.state = .initial
     }
 }

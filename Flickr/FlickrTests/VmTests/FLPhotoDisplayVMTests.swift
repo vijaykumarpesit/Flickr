@@ -10,7 +10,7 @@ import XCTest
 
 class FLMockDataSource: FLPhotoDataSourceProtocol {
     var queryText: String?
-    var state:FLPhotoDataSourceState = .FLPhotoDataSourceDefault
+    var state:FLPhotoDataSourceState = .initial
     var results:[FLPhoto] = [FLPhoto]()
     var pageNumber:Int = 1
     
@@ -23,7 +23,7 @@ class FLMockDataSource: FLPhotoDataSourceProtocol {
     }
     
     func fetchNextBatch(completion: @escaping (FLPhotoDataSourceState) -> Void) {
-        self.state = .FLPhotoDataSourceFinished
+        self.state = .finished
         completion(self.state)
     }
 }

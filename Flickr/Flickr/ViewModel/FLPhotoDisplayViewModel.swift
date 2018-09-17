@@ -32,12 +32,12 @@ final class FLPhotoDisplayViewModel: FLPhotoDisplayViewModelProtocol {
     }
     
     func loadMorePhotos(completion: @escaping (Bool) -> Void){
-        if (dataSource.state == .FLPhotoDataSourceLoading || dataSource.state == .FLPhotoDataSourceEndOfResults) {
+        if (dataSource.state == .loading || dataSource.state == .endOfResults) {
             completion(false)
             return
         } else {
             dataSource.fetchNextBatch { (state) in
-                if state == .FLPhotoDataSourceFailed {
+                if state == .failed {
                     completion(false)
                 } else {
                     completion(true)
@@ -47,7 +47,7 @@ final class FLPhotoDisplayViewModel: FLPhotoDisplayViewModelProtocol {
     }
     
     func endOfResults() ->Bool {
-        return dataSource.state == .FLPhotoDataSourceEndOfResults
+        return dataSource.state == .endOfResults
     }
     
     func childViewModelAtIndexPath(indexPath:IndexPath) -> FLPhotoCollectionCellViewModelProtocol? {

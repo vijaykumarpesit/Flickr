@@ -36,20 +36,24 @@ final class FLPhotoCollectionCellViewModel: FLPhotoCollectionCellViewModelProtoc
     }
     
     private func fetchImage(imageURL: URL,completion: @escaping (UIImage?, String) -> Void) {
-        let urlString = self.imageURL.absoluteString
+        let urlString = imageURL.absoluteString
         if let image = self.imageCache?.object(forKey: urlString as NSString) {
             completion(image,urlString)
         } else {
-            self.imageDownloader.fetchImageData(url: self.imageURL) {[weak self] data in
+            self.imageDownloader.fetchImageData(url:imageURL) {[weak self] data in
                 //Updating imageCache only in main thread to ensure thread safety
                 DispatchQueue.main.async {[weak self] in
                     guard let data = data else {
                         completion(nil,urlString)
                         return
                     }
-                    let image = UIImage.init(data: data)
-                    self?.imageCache?.setObject(image!, forKey: imageURL.absoluteString as NSString)
+                    guard let image = UIImage.init(data: data) else {
+                        completion(nil,urlString)
+                        return
+                    }
+                    self?.imageCache?.setObject(image,forKey: imageURL.absoluteString as NSString)
                     completion(image,urlString)
+                    
                 }
             }
         }
