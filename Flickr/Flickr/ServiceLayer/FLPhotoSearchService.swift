@@ -17,7 +17,7 @@ class FLPhotoSearchService:FLPhotoSearchServiceProtocol {
    lazy var nwServiceProvider:NWServiceProvider = self.initializeServiceProvider()
     
     func searchPhotos(searchText: String, page: Int, perPageCount: Int, completionHandler: @escaping (FLPhotosCollection?, Error?) -> Void) {
-        let params = urlParams(searchText:"food", page: page, perPageCount: perPageCount)
+        let params = urlParams(searchText:searchText, page: page, perPageCount: perPageCount)
         let endPoint:NWEndPointProtocol = NWEndPoint.init(baseURL:self.baseURL, pathComp: self.pathComponent, method: self.httpMethod, headers:nil, params: params, body: nil)
         self.nwServiceProvider .performRequest(endPoint: endPoint) {(data, response, error) in
             guard let data = data else{
