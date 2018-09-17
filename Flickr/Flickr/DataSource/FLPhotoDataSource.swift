@@ -11,7 +11,7 @@ import Foundation
 class FLPhotoDataSource:FLPhotoDataSourceProtocol {
     var state:FLPhotoDataSourceState = .FLPhotoDataSourceDefault
     var results:[FLPhoto] = [FLPhoto]()
-    var pageNumber:Int = 0
+    var pageNumber:Int = 1
     lazy var searchService:FLPhotoSearchService = initialiseSearchService()
     var queryText:String? {
         didSet{
@@ -65,6 +65,6 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
 
     private func resetDataSource() {
         self.results = [FLPhoto]()
-        self.pageNumber = 0
+        self.pageNumber = 1
     }
 }
