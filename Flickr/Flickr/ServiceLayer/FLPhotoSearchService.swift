@@ -14,7 +14,8 @@ protocol FLPhotoSearchServiceProtocol {
 }
 
 class FLPhotoSearchService:FLPhotoSearchServiceProtocol {
-   lazy var nwServiceProvider:NWServiceProvider = self.initializeServiceProvider()
+   
+    lazy var nwServiceProvider:NWServiceProvider = self.initializeServiceProvider()
     
     func searchPhotos(searchText: String, page: Int, perPageCount: Int, completionHandler: @escaping (FLPhotosCollection?, Error?) -> Void) {
         let params = urlParams(searchText:searchText, page: page, perPageCount: perPageCount)

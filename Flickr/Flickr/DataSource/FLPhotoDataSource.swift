@@ -8,6 +8,8 @@
 
 import Foundation
 
+let batchSize = 50
+
 class FLPhotoDataSource:FLPhotoDataSourceProtocol {
     var state:FLPhotoDataSourceState = .FLPhotoDataSourceDefault
     var results:[FLPhoto] = [FLPhoto]()
@@ -46,13 +48,24 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
         }
         self.state = .FLPhotoDataSourceLoading
         let searchText = self.queryText ?? ""
-        self.searchService.searchPhotos(searchText:searchText, page: self.pageNumber, perPageCount: 50) { (collection, error) in
+        self.searchService.searchPhotos(searchText:searchText, page: self.pageNumber, perPageCount: batchSize) { (collection, error) in
             if let _ = error {
                 self.state = .FLPhotoDataSourceFailed
             } else {
                 self.state = .FLPhotoDataSourceFinished
                 if let newResults = collection?.photos?.photo {
                     self.results += newResults
+                }
+                
+                if let totol = collection?.photos?.total {
+                    if (self.pageNumber*batchSize > Int(totol)!) {
+                        self.state = .FLPhotoDataSourceEndOfResults
+                    }
+                }
+                
+                //Mark state as finished
+                if (self.pageNumber * batchSize >= Int((collection?.photos?.total)!)!) {
+                    self.state = .FLPhotoDataSourceEndOfResults
                 }
                 
                 self.pageNumber += 1

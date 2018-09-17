@@ -26,11 +26,11 @@ class NWServiceProviderTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Testing Data Task")
         serviceProvider.performRequest(endPoint: endPoint) {(data, response, error) in
             XCTAssertNotNil(data,"Data returned from Flickr API is nil")
-//            do{
-//                let _ = try JSONDecoder().decode(FLPhotosCollection.self, from: data!)
-//            } catch {
-//                XCTFail("Json decode failed")
-//            }
+            do{
+                let _ = try JSONSerialization.jsonObject(with: data!)
+            } catch {
+                XCTFail("Json decode failed")
+            }
             
             expectation.fulfill()
             
