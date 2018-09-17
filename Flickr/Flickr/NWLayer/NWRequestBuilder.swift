@@ -9,8 +9,7 @@
 import Foundation
 
 class NWRequestBuilder {
-    
-    static func buildRequest(from:NWEndPointProtocol) ->URLRequest {
+    static func buildRequest(from: NWEndPoint) -> URLRequest {
         var url = from.baseURL
         if let pathComp = from.pathComponent {
             url = url.appendingPathComponent(pathComp)
@@ -22,5 +21,4 @@ class NWRequestBuilder {
         NWURLParamterEncoder.encode(request: &request, params: from.parameters)
         return request
     }
-    
 }

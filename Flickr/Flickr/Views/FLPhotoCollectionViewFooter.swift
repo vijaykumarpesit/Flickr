@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FLPhotoCollectionViewFooter: UICollectionReusableView {
+final class FLPhotoCollectionViewFooter: UICollectionReusableView {
     @IBOutlet var acivityIndicator:UIActivityIndicatorView!
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -8,55 +8,55 @@
 
 import UIKit
 
-class FLPhotoDisplayVC: UIViewController {
+final class FLPhotoDisplayVC: UIViewController {
+    private let imageCellReuseID = "imageCellReuseID"
+    private let imageCellFooter = "imageCellFooter"
+    private var cellViewModels = [FLPhotoCollectionCellViewModelProtocol]()
+    
     var viewModel:FLPhotoDisplayViewModelProtocol!
-    let imageCellReuseID = "imageCellReuseID"
-    let imageCellFooter = "imageCellFooter"
-    lazy var imageCache:NSCache<NSString, UIImage> = initializeCache()
+    lazy var imageCache: NSCache<NSString, UIImage> = {
+        let cache = NSCache<NSString, UIImage>()
+        cache.countLimit = 100
+        return cache
+    }()
+    
     let imageDownloader = FLImageDownloader()
     
     @IBOutlet weak var collectionView: UICollectionView!
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.registerResubaleComponents()
+        registerResubaleComponents()
     }
 }
 
 extension FLPhotoDisplayVC {
-    
-    private func initializeCache()->NSCache<NSString, UIImage> {
-        let cache = NSCache<NSString, UIImage>.init()
-        cache.countLimit = 100
-        return cache
-    }
-    
     private func registerResubaleComponents() {
-        self.collectionView.register(UINib.init(nibName:"FLPhotoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:imageCellReuseID)
-        self.collectionView.register(UINib.init(nibName:"FLPhotoCollectionViewFooter", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: imageCellFooter)
+        collectionView.register(UINib.init(nibName:"FLPhotoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:imageCellReuseID)
+        collectionView.register(UINib.init(nibName:"FLPhotoCollectionViewFooter", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: imageCellFooter)
+        
     }
 }
 
-extension FLPhotoDisplayVC:UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension FLPhotoDisplayVC: UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.dataSource.numberOfItems()
+        return viewModel.dataSource.numberOfItems()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:imageCellReuseID, for: indexPath) as! FLPhotoCollectionViewCell
-        if let photo = self.viewModel.dataSource.itemAtIndexPath(indexPath) {
-            if cell.viewModel == nil {
-                let vm =  FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
-                cell.viewModel = vm
+        if let photo = viewModel.dataSource.itemAtIndexPath(indexPath) {
+            var cellViewModel: FLPhotoCollectionCellViewModelProtocol?
+            if (indexPath.row < self.cellViewModels.count) {
+                cellViewModel = self.cellViewModels[indexPath.row]
             } else {
-                cell.viewModel.imageURL = URL(string:photo.urlString())!
+                cellViewModel = FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
+                cellViewModels.append(cellViewModel!)
             }
-            cell.configure()
-            
+            cell.configure(vm: cellViewModel!)
         }
         return cell
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -65,7 +65,7 @@ extension FLPhotoDisplayVC:UICollectionViewDelegate,UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if self.viewModel.dataSource.numberOfItems() > 0 && !self.viewModel.endOfResults() {
+        if viewModel.dataSource.numberOfItems() > 0 && !viewModel.endOfResults() {
             return CGSize(width: collectionView.bounds.size.width, height: 40)
         } else {
             return CGSize(width:0, height: 0)
@@ -86,15 +86,15 @@ extension FLPhotoDisplayVC:UICollectionViewDelegate,UICollectionViewDataSource, 
         }
         
     }
-
+    
 }
 
 extension FLPhotoDisplayVC:UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        self.collectionView.isHidden = true
-        self.viewModel.dataSource.queryText = searchBar.text
-        self.viewModel.loadMorePhotos { (loaded) in
+        collectionView.isHidden = true
+        viewModel.dataSource.queryText = searchBar.text
+        viewModel.loadMorePhotos { (loaded) in
             if (loaded){
                 DispatchQueue.main.async { [weak self]  in
                     self?.collectionView.isHidden = false
@@ -102,21 +102,19 @@ extension FLPhotoDisplayVC:UISearchBarDelegate {
                 }
             }
         }
-        
     }
-
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
 }
 
-extension FLPhotoDisplayVC:UIScrollViewDelegate {
+extension FLPhotoDisplayVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-                let offsetY = scrollView.contentOffset.y
+        let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        if self.viewModel.dataSource.numberOfItems() > 0 && offsetY > contentHeight - scrollView.frame.size.height {
-            self.viewModel.loadMorePhotos { (loaded) in
+        if viewModel.dataSource.numberOfItems() > 0 && offsetY > contentHeight - scrollView.frame.size.height {
+            viewModel.loadMorePhotos { (loaded) in
                 if loaded {
                     DispatchQueue.main.async { [weak self]  in
                         self?.collectionView.isHidden = false
@@ -124,7 +122,6 @@ extension FLPhotoDisplayVC:UIScrollViewDelegate {
                     }
                 }
             }
- 
         }
     }
 }

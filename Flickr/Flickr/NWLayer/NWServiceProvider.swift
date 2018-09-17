@@ -15,7 +15,7 @@ class NWServiceProvider {
         self.session = session
     }
     
-    @discardableResult func performRequest(endPoint: NWEndPointProtocol,completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionDataTask? {
+    @discardableResult func performRequest(endPoint: NWEndPoint,completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionDataTask? {
         let request = NWRequestBuilder.buildRequest(from: endPoint)
         let task = self.session.dataTask(with:request, completionHandler: completionHandler)
         task.resume()

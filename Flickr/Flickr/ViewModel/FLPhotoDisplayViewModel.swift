@@ -14,19 +14,19 @@ protocol FLPhotoDisplayViewModelProtocol {
     func endOfResults() ->Bool
 }
 
-class FLPhotoDisplayViewModel:FLPhotoDisplayViewModelProtocol {
+final class FLPhotoDisplayViewModel: FLPhotoDisplayViewModelProtocol {
     var dataSource:FLPhotoDataSourceProtocol
 
-    init(dataSource:FLPhotoDataSourceProtocol) {
+    init(dataSource: FLPhotoDataSourceProtocol) {
         self.dataSource = dataSource
     }
     
-    func loadMorePhotos(completion:@escaping (Bool) ->Void){
-        if (self.dataSource.state == .FLPhotoDataSourceLoading || self.dataSource.state == .FLPhotoDataSourceEndOfResults) {
+    func loadMorePhotos(completion: @escaping (Bool) -> Void){
+        if (dataSource.state == .FLPhotoDataSourceLoading || dataSource.state == .FLPhotoDataSourceEndOfResults) {
             completion(false)
             return
         } else {
-            self.dataSource.fetchNextBatch { (state) in
+            dataSource.fetchNextBatch { (state) in
                 if state == .FLPhotoDataSourceFailed {
                     completion(false)
                 } else {
@@ -37,7 +37,7 @@ class FLPhotoDisplayViewModel:FLPhotoDisplayViewModelProtocol {
     }
 
     func endOfResults() ->Bool {
-        return self.dataSource.state == .FLPhotoDataSourceEndOfResults
+        return dataSource.state == .FLPhotoDataSourceEndOfResults
     }
 
 }

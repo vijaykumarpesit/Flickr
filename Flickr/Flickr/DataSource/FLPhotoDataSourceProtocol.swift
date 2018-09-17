@@ -16,8 +16,8 @@ protocol FLPhotoDataSourceProtocol {
 }
 
 
-enum FLPhotoDataSourceState:Int {
-    case FLPhotoDataSourceDefault = 0
+enum FLPhotoDataSourceState {
+    case FLPhotoDataSourceDefault
     case FLPhotoDataSourceLoading
     case FLPhotoDataSourceFinished
     case FLPhotoDataSourceFailed

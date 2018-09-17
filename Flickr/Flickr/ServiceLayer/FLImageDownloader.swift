@@ -10,10 +10,9 @@ import Foundation
 
 protocol FLImageDownloaderProtocol {
     func fetchImageData(url:URL, completionHandler: @escaping (Data?) -> Void)
-    
 }
 
-class FLImageDownloader:FLImageDownloaderProtocol {
+final class FLImageDownloader:FLImageDownloaderProtocol {
     lazy var nwServiceProvider:NWServiceProvider = self.initializeServiceProvider()
     
     private func initializeServiceProvider() ->NWServiceProvider  {
@@ -24,11 +23,10 @@ class FLImageDownloader:FLImageDownloaderProtocol {
     }
     
     func fetchImageData(url:URL, completionHandler: @escaping (Data?) -> Void) {
-        let endPoint:NWEndPointProtocol = NWEndPoint.init(baseURL:url, pathComp:nil, method:.get, headers:nil, params:nil, body: nil)
+        let endPoint = NWEndPoint.init(baseURL:url, pathComp:nil, method:.get, headers:nil, params:nil, body: nil)
         self.nwServiceProvider.performRequest(endPoint: endPoint) { (data, response, error) in
             completionHandler(data)
         }
-        
     }
 }
 
