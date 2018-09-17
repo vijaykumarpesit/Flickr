@@ -3,3 +3,4 @@
 Nice to have:
 1.More test coverage and UI test cases  
 2.Use mapping and validator for json parsing instead of heavily depending on codable protocol.
+3.Empty space in search text has been handled through url encoding , getting nil result, need to debug
