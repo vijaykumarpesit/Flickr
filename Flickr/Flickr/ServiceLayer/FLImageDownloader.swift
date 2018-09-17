@@ -17,7 +17,9 @@ class FLImageDownloader:FLImageDownloaderProtocol {
     lazy var nwServiceProvider:NWServiceProvider = self.initializeServiceProvider()
     
     private func initializeServiceProvider() ->NWServiceProvider  {
-        let serviceProvider = NWServiceProvider.init(session: URLSession(configuration: .default))
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.httpMaximumConnectionsPerHost = 5
+        let serviceProvider = NWServiceProvider.init(session: URLSession(configuration:sessionConfig))
         return serviceProvider
     }
     

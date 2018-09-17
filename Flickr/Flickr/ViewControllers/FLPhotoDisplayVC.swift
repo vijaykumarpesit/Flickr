@@ -27,7 +27,7 @@ extension FLPhotoDisplayVC {
     
     private func initializeCache()->NSCache<NSString, UIImage> {
         let cache = NSCache<NSString, UIImage>.init()
-        cache.countLimit = 50
+        cache.countLimit = 100
         return cache
     }
     
