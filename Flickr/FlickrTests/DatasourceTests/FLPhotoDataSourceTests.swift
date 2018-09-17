@@ -22,7 +22,7 @@ class FLPhotoDataSourceTests: XCTestCase {
         let expectation = XCTestExpectation(description:"")
         ds.fetchNextBatch { (state) in
             XCTAssert(self.ds.numberOfItems() == 50,"Mismatch in number of items")
-            XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceFinished,"Mismatch in state")
+            XCTAssert(self.ds.state == FLPhotoDataSourceState.finished,"Mismatch in state")
             expectation.fulfill()   
         }
         
@@ -34,7 +34,7 @@ class FLPhotoDataSourceTests: XCTestCase {
         let expectation = XCTestExpectation(description: "")
         self.ds.pageNumber = 11625
         ds.fetchNextBatch { (state) in
-            XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceEndOfResults,"Mismatch in state")
+            XCTAssert(self.ds.state == FLPhotoDataSourceState.endOfResults,"Mismatch in state")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
@@ -45,7 +45,7 @@ class FLPhotoDataSourceTests: XCTestCase {
         let expectation = XCTestExpectation(description: "")
         ds.fetchNextBatch { (state) in
             XCTAssert(self.ds.numberOfItems() == 50,"Mismatch in number of items")
-            XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceFinished,"Mismatch in state")
+            XCTAssert(self.ds.state == FLPhotoDataSourceState.finished,"Mismatch in state")
             self.ds.queryText = "food"
             XCTAssert(self.ds.numberOfItems() == 0,"Resetting data on new query failed")
             expectation.fulfill()
@@ -57,10 +57,10 @@ class FLPhotoDataSourceTests: XCTestCase {
     func testDataSourceState() {
         let expectation = XCTestExpectation(description: "")
         ds.fetchNextBatch { (state) in
-            XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceFinished,"Mismatch in state")
+            XCTAssert(self.ds.state == FLPhotoDataSourceState.finished,"Mismatch in state")
             expectation.fulfill()
         }
-        XCTAssert(self.ds.state == FLPhotoDataSourceState.FLPhotoDataSourceLoading,"Mismatch in state")
+        XCTAssert(self.ds.state == FLPhotoDataSourceState.loading,"Mismatch in state")
         
         wait(for: [expectation], timeout: 10.0)
         

@@ -49,27 +49,31 @@ class FLPhotoDataSource:FLPhotoDataSourceProtocol {
         self.state = .loading
         let searchText = self.queryText ?? ""
         self.searchService.searchPhotos(searchText:searchText, page: self.pageNumber, perPageCount: batchSize) { (collection, error) in
-            if let _ = error {
+            if let _ = error,collection?.stat != "ok" {
                 self.state = .failed
             } else {
+                guard collection?.stat?.caseInsensitiveCompare("ok") == ComparisonResult.orderedSame else {
+                    self.state = .failed
+                    completion(self.state)
+                    return
+                }
                 self.state = .finished
                 if let newResults = collection?.photos?.photo {
                     self.results += newResults
-                }
-                
-                if let totol = collection?.photos?.total {
-                    if (self.pageNumber*batchSize > Int(totol)!) {
+                    
+                    if let totol = collection?.photos?.total {
+                        if (self.pageNumber*batchSize > Int(totol)!) {
+                            self.state = .endOfResults
+                        }
+                    }
+                    //Mark state as finished
+                    if (self.pageNumber * batchSize >= Int((collection?.photos?.total)!)!) {
                         self.state = .endOfResults
                     }
+                    
+                    self.pageNumber += 1
+                    //Need to add end of result state
                 }
-                
-                //Mark state as finished
-                if (self.pageNumber * batchSize >= Int((collection?.photos?.total)!)!) {
-                    self.state = .endOfResults
-                }
-                
-                self.pageNumber += 1
-                //Need to add end of result state
             }
             completion(self.state)
         }
