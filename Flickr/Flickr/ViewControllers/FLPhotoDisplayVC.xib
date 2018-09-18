@@ -38,7 +38,7 @@
                         <outlet property="delegate" destination="-1" id="592-9V-OQR"/>
                     </connections>
                 </collectionView>
-                <searchBar contentMode="redraw" barStyle="black" placeholder="Search Flickr" translatesAutoresizingMaskIntoConstraints="NO" id="zad-Bd-WkW">
+                <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" placeholder="Search Flickr" translatesAutoresizingMaskIntoConstraints="NO" id="zad-Bd-WkW">
                     <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="zpQ-K2-C0K"/>
