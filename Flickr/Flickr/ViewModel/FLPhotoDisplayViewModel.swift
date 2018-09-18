@@ -57,15 +57,19 @@ final class FLPhotoDisplayViewModel: FLPhotoDisplayViewModelProtocol {
                 cellViewModel = childViewModels[indexPath.row]
             } else {
                 cellViewModel = FLPhotoCollectionCellViewModel.init(imageCache:imageCache, imageURL:URL(string:photo.urlString())!, imageDownloader: imageDownloader)
-                
+                childViewModels.insert(cellViewModel!, at: indexPath.row)
             }
         }
         return cellViewModel
     }
     
     func searchPhotosWithQueryText(text:String?, completion:@escaping (Bool) ->Void) {
-        self.dataSource.queryText = text
-        self.loadMorePhotos(completion: completion)
+        dataSource.queryText = text
+        resetChildVms()
+        loadMorePhotos(completion: completion)
     }
-
+    
+    func resetChildVms() {
+        childViewModels = [FLPhotoCollectionCellViewModelProtocol]()
+    }
 }
